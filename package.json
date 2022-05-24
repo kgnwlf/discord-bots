@@ -11,7 +11,9 @@
   },
   "scripts": {
     "test": "",
-    "start": "nodemon praetorIndex.js"
+    "start": "",
+    "terra": "nodemon terraIndex.js",
+    "praetor": "nodemon praetorIndex.js"
   },
   "repository": {
     "type": "git",
