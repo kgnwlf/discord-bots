@@ -13,8 +13,9 @@
     "test": "",
     "start": "",
     "bots": "nodemon terraIndex.js && nodemon praetorIndex.js",
-    "terra": "nodemon terraIndex.js",
-    "praetor": "nodemon praetorIndex.js"
+    "terra": "nodemon ./botServers/terraIndex.js",
+    "praetor": "nodemon ./botServers/praetorIndex.js",
+    "sun": "nodemon ./botServers/sunGodIndex.js"
   },
   "repository": {
     "type": "git",

@@ -7,15 +7,31 @@ const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]});
 
 app.listen(8080, () => {
   console.log("Praetor is online!");
-})
+});
 
-app.get("/", (req, res) => {
-  res.send("Ready");
-})
+const praetorCommands = {
+  'oh': 'Pls No',
+  'for who': '***FOR THE REPUBLIC***',
+  'bing': 'bong',
+  'bong': "Barbarian! That's my line!"
+};
+
+var whatTheBotDo = (msg) => {
+  var commands = Object.keys(praetorCommands);
+  var returnStr = "Try sending ";
+  commands.forEach(command => {
+    returnStr += `'${command}', `;
+  })
+  returnStr = returnStr.slice(0, returnStr.length - 2)
+  returnStr += ", 'tell me a story', 'do you have a business card?'."
+  msg.channel.send(returnStr);
+};
 
 client.on("message", msg => {
   if (msg.author.id !== '936831625378037821') {
-    if (msg.content === "tell me a story") {
+    if (praetorCommands[msg.content.toLowerCase()]) {
+      msg.channel.send(praetorCommands[msg.content.toLowerCase()]);
+    } else if (msg.content.toLowerCase() === "tell me a story") {
       setTimeout(() => {
         msg.channel.send('Have you ever heard the Tragedy of Darth Plagueis the Wise?')
       }, 250);
@@ -34,27 +50,17 @@ client.on("message", msg => {
       setTimeout(() => {
         msg.channel.send('He could save others from death, but not himself.')
       }, 13500);
-    } else if (msg.content === 'oh' || msg.content === 'Oh') {
-      msg.channel.send('Pls No');
-    } else if (msg.content === 'for who?') {
-      msg.channel.send('***FOR THE REPUBLIC***');
-    } else if (msg.content === ('bing')) {
-      msg.channel.send('bong');
-    } else if (msg.content === "bong") {
-      msg.channel.send("Barbarian! That's my line!");
-    } else if (msg.content === 'do you have a business card?' && msg.author.id !== '935614070957158410' && msg.author.id !== '935416368499675177') {
+    } else if (msg.content.toLowerCase() === 'do you have a business card?' && msg.author.id !== '935614070957158410' && msg.author.id !== '935416368499675177') {
       setTimeout(() => {
-        msg.channel.send({files: ["https://i.imgur.com/1gP1Krn.jpg"]})
-      }, 500)
-    } else if (msg.content.toLowerCase === 'where is rubix?') {
-      msg.channel.send("Muted");
+        msg.channel.send("https://i.imgur.com/1gP1Krn.jpg")
+      }, 500);
     }
   }
-})
+});
 
 client.on("message", msg => {
-  if (msg.content === "what does Praetor Boticus Maximus do?") {
-    msg.channel.send("Try sending 'bing', 'tell me a story', 'oh', 'for who?', 'do you have a business card?', 'where is rubix?");
+  if (msg.content.toLowerCase() === "what does praetor do?") {
+    whatTheBotDo(msg);
   }
 })
 
