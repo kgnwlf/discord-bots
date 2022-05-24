@@ -22,7 +22,7 @@ var manualBotCommands = {
   'what god do you worship?': 'The one true God, the Sun God <:praisethesun:879443542324428812>',
   'where is flerp?': 'who?',
   'who are burdened with glorious purpose?': 'Bobcat and Oh Pls No',
-  'where is rubix?': 'Muted'
+  'where is rubix?': 'Some say he\'s dead, others say he\'s muted'
 }
 
 var modIDs = {
@@ -37,16 +37,14 @@ var bannedIDs = ['92613585871581184','225454854892552194','865741136755949648','
 ];
 
 var whatTheBotDo = (msg) => {
-  db.get("botCommands").then(botCommands => {
-    var commands = Object.keys(botCommands);
-    var returnStr = "Try sending ";
-    commands.forEach(command => {
-      returnStr += `'${command}', `;
-    })
-    returnStr = returnStr.slice(0, returnStr.length - 2)
-    returnStr += '.'
-    msg.channel.send(returnStr);
+  var commands = Object.keys(manualBotCommands);
+  var returnStr = "Try sending ";
+  commands.forEach(command => {
+    returnStr += `'${command}', `;
   })
+  returnStr = returnStr.slice(0, returnStr.length - 2)
+  returnStr += '.'
+  msg.channel.send(returnStr);
 };
 
 client.on("message", msg => {
@@ -54,7 +52,7 @@ client.on("message", msg => {
     if (manualBotCommands[msg.content.toLowerCase()]) {
       msg.channel.send(manualBotCommands[msg.content]);
     } else if (msg.content === "what does terra bot do?") {
-      // whatTheBotDo(msg);
+      whatTheBotDo(msg);
     }
     //commands for mods
 

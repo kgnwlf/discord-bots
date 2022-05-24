@@ -6,7 +6,7 @@ const app = express();
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]});
 
 app.listen(8080, () => {
-  console.log("For the Glory of Rome!");
+  console.log("Praetor is online!");
 })
 
 app.get("/", (req, res) => {
