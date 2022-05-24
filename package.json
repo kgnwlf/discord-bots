@@ -1,0 +1,26 @@
+{
+  "name": "bots",
+  "version": "1.0.0",
+  "description": "",
+  "main": "praetorIndex.js",
+  "dependencies": {
+    "discord.js": "^13.7.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  },
+  "scripts": {
+    "test": "",
+    "start": "nodemon praetorIndex.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kgnwlf/bots.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kgnwlf/bots/issues"
+  },
+  "homepage": "https://github.com/kgnwlf/bots#readme"
+}
