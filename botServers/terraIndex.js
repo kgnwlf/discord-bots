@@ -17,15 +17,21 @@ var react = false;
 
 const terraCommands = {
   'bing': 'bong',
-  'can i get the seed to the realm?': 'lol, no',
+  'can i get the seed to the realm?': 'lol, no.',
   'take me out to dinner': 'ayyyyooooo',
-  'who is your favorite mod?': 'Boobject',
-  'who is your favourite mod?': 'Boobcat',
+  'who is your favorite mod?': 'Boobject.',
+  'who is your favourite mod?': 'Boobcat.',
   'what god do you worship?': 'The one true God, the Sun God <:praisethesun:879443542324428812>',
   'where is flerp?': 'who?',
-  'who are burdened with glorious purpose?': 'Bobcat and Oh Pls No',
-  'where is rubix?': 'Some say he\'s dead, others say he\'s muted'
-}
+  'who are burdened with glorious purpose?': 'Bobcat and Oh Pls No.',
+  'where is rubix?': 'Some say he\'s dead, others say he\'s muted.',
+  'where is traveler?': 'Being horny.',
+  'what are you terra bot?': 'I\'m a bot that helps and entertains the people of Terra.'
+};
+
+const modCommands = {
+  'toggle reactions': 'toggle reactions'
+};
 
 const modIDs = {
   '749292732920365186': 'Bobcat',
@@ -53,6 +59,10 @@ client.on("message", msg => {
   if (react) {
     if (msg.author.id === '823739605424668702' || msg.author.id === '704002978234761296') {
       msg.react('<:nohorny:879441537929453628>');
+    } else if (msg.author.id === '277258154012835843') {
+      msg.react("<:praisethesun:879443542324428812>");
+    } else if (msg.author.id === '749292732920365186') {
+      msg.react('<:doubt:935305896165277758>');
     }
   }
 });
@@ -66,17 +76,19 @@ client.on("message", msg => {
       msg.channel.send(`Hi ${msg.author.username}`);
     }
     //commands for mods
-    if (modIDs[msg.author.id]) {
-      if (msg.content.toLowerCase() === 'toggle reactions') {
+    if (modCommands[msg.content.toLowerCase()]) {
+        if (msg.member.roles.cache.has('877005135421796413')) {
         react = !react;
 
         if (react) {
-          msg.channel.send('Reactions are on');
+          msg.channel.send('Reactions are on.');
         } else {
-          msg.channel.send('Reactions are off');
+          msg.channel.send('Reactions are off.');
         }
+      } else {
+        msg.channel.send('https://cdn.discordapp.com/attachments/935580742539419721/979793289781837874/IMG_4282.gif');
       }
-    }
+    };
     //set commands, mods only
       //update commands needs to be improved before this can be done. currently sets db commands to commands object, would just override set commands
 });
