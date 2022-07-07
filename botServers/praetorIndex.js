@@ -2,7 +2,7 @@ const express = require("express");
 const Discord = require("discord.js");
 require('dotenv').config();
 
-const common = require('../utils/commonFuncs.js');
+const common = require('../utils/common/commonFuncs.js');
 const praetor = require('../utils/praetorBotUtils/praetorUtils.js');
 
 const app = express();
@@ -23,7 +23,8 @@ const imperiumCommands = {
   'boticus, get the cross': 'Aye sir',
   'praise sol!': 'Bless the Imperium!',
   'boticus??': 'Apologies, I was fighting ***furries***.',
-  'boticus': 'Sir.'
+  'boticus': 'Sir.',
+  'get the cross': 'Aye sir.'
 
 }
 

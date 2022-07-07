@@ -1,7 +1,10 @@
 const express = require("express");
+const mongoose = require('mongoose');
 const { Client, Intents } = require("discord.js");
 require('dotenv').config();
-const common = require('../utils/commonFuncs.js');
+
+const common = require('../utils/common/commonFuncs.js');
+const schema = require('../utils/common/commonSchema.js');
 const terra = require('../utils/terraBotUtils/terraFuncs.js');
 
 const app = express();
@@ -30,51 +33,44 @@ var hangman = {
   }
 };
 
-var blink = 'https://tenor.com/view/will-smith-men-in-black-gif-4907321';
+let terraCommands, modCommands, reactions, id;
 
-const terraCommands = {
-  'bing': 'bong',
-  'can i get the seed to the realm?': 'lol, no.',
-  'take me out to dinner': 'ayyyyooooo',
-  'who is your favorite mod?': 'Boobject.',
-  'who is your favourite mod?': 'Boobcat.',
-  'what god do you worship?': 'The one true God, the Sun God <:praisethesun:879443542324428812>',
-  'where is flerp?': 'who?',
-  'who are burdened with glorious purpose?': 'Bobcat and Oh Pls No.',
-  'where is rubix?': 'Some say he\'s dead, others say he\'s muted.',
-  'where is traveler?': 'Being horny.',
-  'what are you terra bot?': 'I\'m a bot that helps and entertains the people of Terra.',
-  'what do we do with new people?': 'We eat them.',
-  'what did pedro say?': 'Idk, he deleted it.',
-  'where is the shopkeeper?': 'Probably at Walmart or the fortress.'
-};
+let blink = 'https://tenor.com/view/will-smith-men-in-black-gif-4907321';
 
-const modCommands = {
-  'toggle reactions': 'toggle reactions',
-  'parrot': 'parrot',
-  'purge': 'purge',
-  'https://tenor.com/view/will-smith-men-in-black-gif-4907321': 'https://tenor.com/view/will-smith-men-in-black-gif-4907321'
-};
+client.on('ready', async () => {
+  await mongoose.connect('mongodb://localhost:27017/terra');
 
-const reactions = {
-  '823739605424668702': '<:Aye:932391784779231332>',
-  '704002978234761296': '<:nohorny:879441537929453628>',
-  '749292732920365186': '<:doubt:935305896165277758>',
-  '277258154012835843': '<:praisethesun:879443542324428812>',
-  '756776639853232138': '<:hmmhang:931307625533030410>',
-  '182930766483685376': '<:pepesad:935726518578081862>',
-  '982347783988215849': '<:pain:932391703455858698>'
-};
+  // let terraBotCommands = new schema.commands({
+  //   bot: 'terra',
+  //   reactions: reactions,
+  //   neutralCommands: terraCommands,
+  //   partyCommands: modCommands,
+  //   misc: {'NONE HERE': 'YET'}
+  // });
 
-const modIDs = {
-  '749292732920365186': 'Bobcat',
-  '277258154012835843': 'Object',
-  '586549627667480621': 'Oh Pls No',
-  '182930766483685376': 'Rhi'
-}
+  // console.log(terraBotCommands);
 
-//use indexOf to find if person is allowed in the server
-const bannedIDs = ['92613585871581184','225454854892552194','865741136755949648','778172078314618930','932416042062454784','792548790501769226','344289425712349186','838521227382358017','898607216146399272','778258537201008670','258280240038543360','726052644355047494','811779947614044180','583419372408668169','663087618661023766','884245156100984932','884214336229347342','585097762299707402','836729183253299211','730957129967468704','778550387585187861','792443094833823754','605881628350349346','836999523896393738','759527976924217354','846840966697713728','280790589107208192','672961519058944001','717118525675667487','932419434696568943','180611136452952064','665619907207233599','562118561917698048'];
+  // await terraBotCommands.save();
+
+  // console.log('done')
+
+  let dbCommands = await schema.commands.find({bot: 'terra'});
+
+  dbCommands = dbCommands[0];
+
+  terraCommands = dbCommands.neutralCommands;
+  modCommands = dbCommands.partyCommands;
+  reactions = dbCommands.reactions;
+  id = dbCommands._id;
+
+  // console.log(modCommands);
+  console.log(terraCommands);
+
+  // await schema.commands.updateOne({ bot: 'terra' }, { $set: { neutralCommands: terraCommands } });
+  // await schema.commands.updateOne({ bot: 'terra' }, { $set: { partyCommands: modCommands } })
+
+
+});
 
 client.on('messageReactionAdd', async (reaction, user) => {
   if (reaction.partial) {
@@ -133,14 +129,15 @@ client.on('messageReactionRemove', async (reaction, user) => {
 });
 
 client.on("message", msg => {
-  if (msg.guild.id === '857035524716232744') {
-    // CHECK FOR PIONEER ROLE
+  console.log(msg.content)
+
+  if (msg.guild.id === '857035524716232744') { // CHECK FOR PIONEER ROLE
+
     if (!msg.member.roles.cache.has('857095884319752222')) {
       msg.member.roles.add('857095884319752222');
     }
 
-    // ADD REACTIONS
-    if (react) {
+    if (react) { // ADD REACTIONS
       if (reactions[msg.author.id]) {
         msg.react(reactions[msg.author.id]);
       }
@@ -174,7 +171,7 @@ client.on("message", msg => {
     if (terraCommands[msg.content.toLowerCase()]) {
       msg.channel.send(terraCommands[msg.content]);
     } else if (msg.content === "what does terra bot do?") {
-      terra.whatTheBotDo(msg);
+      terra.whatTheBotDo(msg, terraCommands);
     } else if (msg.content.toLowerCase() === 'hi terra bot') {
       msg.channel.send(`Hi ${msg.author.username}`);
     } else if (msg.content.toLowerCase().includes('poll:') && msg.author.id !== '935416368499675177') {
@@ -220,7 +217,7 @@ client.on("message", msg => {
       msg.channel.send(Math.floor(Math.random() * 5000) + ', ' + Math.floor(Math.random() * 60) + ', ' + Math.floor(Math.random() * 5000));
 
     } else if (msg.content.toLowerCase().includes('start hangman') || hangman.status && msg.author.id !== '935416368499675177') {
-      // if (!common.botIds[msg.author.id]) {
+      // if (!common.botIds[msg.author.id] && msg.content.includes('guess:') || msg.content.includes('check:')) {
       //   terra.handleHangman(msg, hangman, client);
 
       // }
@@ -228,12 +225,18 @@ client.on("message", msg => {
       msg.channel.send('Hangman hurts to play, maybe later.');
 
     }
-    //commands for mods
-    if (modCommands[msg.content.toLowerCase()]) {
+
+    // COMMANDS FOR MODS
+    console.log('checking for mod');
+    console.log(msg.content.includes(modCommands[msg.content.toLowerCase()]));
+    console.log(modCommands[msg.content.toLowerCase()])
+    if (modCommands[msg.content.toLowerCase()] || msg.content.includes(modCommands[msg.content.toLowerCase()])) {
+      console.log('mod command');
         if (msg.member.roles.cache.has('877005135421796413')) {
 
           if (msg.content === blink || msg.content === 'purge') {
-            msg.channel.messages.fetch({limit: 100}).then(messages => msg.channel.bulkDelete(messages.filter(m => m.author.id.includes('704002978234761296') || m.author.id.includes('935416368499675177'))));
+            msg.channel.messages.fetch({limit: 100}).then(messages => msg.channel.bulkDelete(messages.filter(m => common.botIds[m.author.id])));
+
           } else if (msg.content.toLowerCase() === 'parrot') {
             parrot = !parrot;
 
@@ -250,6 +253,31 @@ client.on("message", msg => {
             } else {
               msg.channel.send('Reactions are off.');
             }
+          } else if (msg.content.toLowerCase().split(' ')[0] === 'command:') {
+            console.log('lets create a command')
+            let key = [];
+            let value = [];
+            let ontoValue = false;
+
+            let msgContent = msg.content.split(' ');
+
+            msgContent.shift();
+
+            for (var i = 0; i < msgContent.length; i++) {
+              if (msgContent[i] === 'response:') {
+                ontoValue = true;
+              } else if (ontoValue) {
+                value.push(msgContent[i]);
+
+              } else {
+                key.push(msgContent[i]);
+
+              }
+            }
+
+            terraCommands[key.join(' ')] = value.join(' ');
+
+            msg.channel.send(`"${value.join(' ')}" will be the response to "${key.join(' ')}"`);
           }
 
 
@@ -269,6 +297,5 @@ client.login(process.env.TERRA);
 
 Future improvements:
 Randomly assign roles for tribunals, rule debate
-Assign roles based on reaction to a message, opt-in roles
 
 */

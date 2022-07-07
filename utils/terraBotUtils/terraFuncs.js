@@ -1,4 +1,4 @@
-const common = require('../commonFuncs.js');
+const common = require('../common/commonFuncs.js');
 
 const handleHangman = (msg, hangman, client) => {
   let msgContent = '';
@@ -126,7 +126,7 @@ const handleHangman = (msg, hangman, client) => {
 
 }
 
-var whatTheBotDo = (msg) => {
+var whatTheBotDo = (msg, terraCommands) => {
   var commands = Object.keys(terraCommands);
   var returnStr = "Try sending ";
   commands.forEach(command => {
