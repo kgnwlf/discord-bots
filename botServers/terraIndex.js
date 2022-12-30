@@ -58,10 +58,10 @@ client.on('ready', async () => {
 
   dbCommands = dbCommands[0];
 
-  terraCommands = dbCommands.neutralCommands;
-  modCommands = dbCommands.partyCommands;
-  reactions = dbCommands.reactions;
-  id = dbCommands._id;
+  terraCommands = dbCommands?.neutralCommands;
+  modCommands = dbCommands?.partyCommands;
+  reactions = dbCommands?.reactions;
+  id = dbCommands?._id;
 
   // console.log(modCommands);
   console.log(terraCommands);
