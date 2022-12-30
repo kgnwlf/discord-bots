@@ -40,17 +40,46 @@ let blink = 'https://tenor.com/view/will-smith-men-in-black-gif-4907321';
 client.on('ready', async () => {
   await mongoose.connect('mongodb://localhost:27017/terra');
 
-  // let terraBotCommands = new schema.commands({
-  //   bot: 'terra',
-  //   reactions: reactions,
-  //   neutralCommands: terraCommands,
-  //   partyCommands: modCommands,
-  //   misc: {'NONE HERE': 'YET'}
-  // });
+  let terraBotCommands = new schema.commands({
+    bot: 'terra',
+    reactions: {
+      '823739605424668702': '<:Aye:932391784779231332>',
+      '704002978234761296': '<:nohorny:879441537929453628>',
+      '749292732920365186': '<:doubt:935305896165277758>',
+      '277258154012835843': '<:praisethesun:879443542324428812>',
+      '756776639853232138': '<:hmmhang:931307625533030410>',
+      '182930766483685376': '<:pepesad:935726518578081862>',
+      '982347783988215849': '<:pain:932391703455858698>'
+    },
+    neutralCommands: {
+    'bing': 'bong',
+    'can i get the seed to the realm?': 'lol, no.',
+    'take me out to dinner': 'ayyyyooooo',
+    'who is your favorite mod?': 'Boobject.',
+    'who is your favourite mod?': 'Boobcat.',
+    'what god do you worship?': 'The one true God, the Sun God <:praisethesun:879443542324428812>',
+    'where is flerp?': 'who?',
+    'who are burdened with glorious purpose?': 'Bobcat and Oh Pls No.',
+    'where is rubix?': "Some say he's dead, others say he's muted.",
+    'where is traveler?': 'Being horny.',
+    'what are you terra bot?': "I'm a bot that helps and entertains the people of Terra.",
+    'what do we do with new people?': 'We eat them.',
+    'what did pedro say?': 'Idk, he deleted it.',
+    'where is the shopkeeper?': 'Probably at Walmart or the fortress.',
+    'where is mr orange?': "He got banned for his hardwork, not because he had hacked armor, because he didn't.",
+    "where's superiorwolf?": 'Probably updating.'
+    },
+    partyCommands: 'toggle reactions': 'toggle reactions',
+    'parrot': 'parrot',
+    'purge': 'purge',
+    'https://tenor.com/view/will-smith-men-in-black-gif-4907321': 'https://tenor.com/view/will-smith-men-in-black-gif-4907321',
+    'command:': 'command:',
+    misc: {'NONE HERE': 'YET'}
+  });
 
   // console.log(terraBotCommands);
 
-  // await terraBotCommands.save();
+  await terraBotCommands.save();
 
   // console.log('done')
 
