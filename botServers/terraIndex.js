@@ -69,11 +69,13 @@ client.on('ready', async () => {
     'where is mr orange?': "He got banned for his hardwork, not because he had hacked armor, because he didn't.",
     "where's superiorwolf?": 'Probably updating.'
     },
-    partyCommands: 'toggle reactions': 'toggle reactions',
+    partyCommands: {
+    'toggle reactions': 'toggle reactions',
     'parrot': 'parrot',
     'purge': 'purge',
     'https://tenor.com/view/will-smith-men-in-black-gif-4907321': 'https://tenor.com/view/will-smith-men-in-black-gif-4907321',
-    'command:': 'command:',
+    'command:': 'command:'
+    },
     misc: {'NONE HERE': 'YET'}
   });
 
