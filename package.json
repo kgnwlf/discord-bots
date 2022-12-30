@@ -13,7 +13,7 @@
   "scripts": {
     "test": "",
     "start": "",
-    "bots": "nodemon terraIndex.js && nodemon praetorIndex.js",
+    "bots": "nodemon ./botServers/terraIndex.js && nodemon ./botServers/praetorIndex.js && nodemon ./botServers/sunGodIndex.js",
     "terra": "nodemon ./botServers/terraIndex.js",
     "praetor": "nodemon ./botServers/praetorIndex.js",
     "sun": "nodemon ./botServers/sunGodIndex.js"
