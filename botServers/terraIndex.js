@@ -129,11 +129,9 @@ client.on('messageReactionRemove', async (reaction, user) => {
 });
 
 client.on("message", msg => {
-  console.log(msg.content)
-
   if (msg.guild.id === '857035524716232744') { // CHECK FOR PIONEER ROLE
 
-    if (!msg.member.roles.cache.has('857095884319752222')) {
+    if (!msg.member.roles.cache.has('857095884319752222') && msg.author.id !== '270904126974590976') {
       msg.member.roles.add('857095884319752222');
     }
 

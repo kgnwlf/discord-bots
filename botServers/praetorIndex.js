@@ -8,7 +8,7 @@ const praetor = require('../utils/praetorBotUtils/praetorUtils.js');
 const app = express();
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]});
 
-app.listen(8080, () => {
+app.listen(8083, () => {
   console.log("Praetor is online!");
 });
 
