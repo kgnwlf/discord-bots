@@ -16,7 +16,8 @@ const praetorCommands = {
   'oh': 'Pls No',
   'for who': '***FOR THE REPUBLIC***',
   'bing': 'bong',
-  'bong': "Barbarian! That's my line!"
+  'bong': "Barbarian! That's my line!",
+  'fuck the 49ers': 'For life.'
 };
 
 const imperiumCommands = {
